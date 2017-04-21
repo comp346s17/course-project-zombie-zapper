@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <script>
+        $(function(){
+            $("#tabs").tabs();
+            $('#progressbar').progressbar({
+              value:75
+            });
+        });
+        $(document).ready({
+          
+        });
+    </script>
+  </head>
+  <body>
+    <div class="sign-in">
+          <button>
+              Sign in
+          </button>
+    </div>
+    <div id = 'title'>
+      <h1> Zombie Zappers </h1>
+    </div>
+    <div id = 'top_post'>
+      <button id = "close-post">x</button>
+      <h2>I am trying to be lose 100lbs. What is a good way to achieve this?</h2>
+          <div class="commitments">
+            <ul>
+              <li>
+                Every time I want to eat a donut, I will eat 50 donuts
+              </li>
+              <li>
+                Every time I want to have orange juice, I will brush my teeth
+              </li>
+              <li>
+                Every time I fill up my water bottle, I will do 20 sit-ups
+              </li>
+              <li>
+                Every time I feel tired, I will take a nap.
+              </li>
+            </ul>
+          </div>
+        </div>
+    <div id = 'main_app'>
+      <div id="tabs">
+        <ul>
+          <li><a href="#categories-tab">Search</a></li>
+          <li><a href="#user-tab">Profile </a></li>
+          <li><a href="#commitments-tab">Commitments</a></li>
+          <li><a href="#addnew-tab"> + </a></li>
+        </ul>
+        <div id="categories-tab">
+        <span style="padding-bottom:30px">
+          <input id="searchbar" type="search" placeholder="Search">
+        </span>
+      
+        <table id = 'categories'>
+          <tr>
+            <td><a href="category_page.html">
+              <i class="fa fa-smile-o fa-5x" aria-hidden="true"></i>
+              <h3> Mental Health </h3>
+              </a>
+            </td>
+            <td>
+              <i class="fa fa-bicycle fa-5x" aria-hidden="true"></i>
+              <h3> Fitness </h3>
+            </td>
+            <td>
+              <i class="fa fa-cogs fa-5x" aria-hidden="true"></i>
+              <h3> Memory </h3>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <i class="fa fa-paint-brush fa-5x" aria-hidden="true"></i>
+              <h3> Creativity </h3>
+            </td>
+            <td>
+              <i class="fa fa-clock-o fa-5x" aria-hidden="true"></i>
+              <h3> Time Management </h3>
+            </td>
+            <td>
+              <i class="fa fa-ellipsis-h fa-5x" aria-hidden="true"></i>
+              <h3> Other </h3>
+            </td>
+          </tr>
+        </table>
+      
+      </div>
+        <div id="user-tab">
+            <div id="title">
+                <i class="fa fa-user 5x" aria-hidden="true" id="user-icon"></i>
+                <!--Photo from "https://www.shareicon.net/interface-profile-user-user-earth-user-symbol-world-665303"-->
+                <hr/>
+                <h2>Hello, User! <a href="edit_profile.html"><i class="fa fa-pencil" aria-hidden="true"></i></a></h2>
+                <hr/>
+    
+                <div id="userdata">
+                    <h3>About Me</h3>
+                    <hr id="userhr" />
+                    <div id="progressbardiv" style="padding-bottom:0px">
+                    <p>I am trying to be less sedentary and get more sleep.</p>
+                    </div>
+                </div>
+                <div id="userdata">
+                    <h3>My Progress</h3>
+                    <hr id="userhr" />
+                    <div id="progressbardiv" style="">
+                    <p>Current Level: 9999</p>
+                    <table style="width:100%">
+                      <tr>
+                        <th style="width:10%;font-size:15px">9999</th>
+                        <th><div id="progressbar" ></div></th>
+                        <th style="width:10%;font-size:15px">9999+</th>
+                      </tr>
+                    </table>
+                    </div>
+                </div>
+                
+            </div>
+          
+        </div>
+        <div id = "commitments-tab">
+          <div class="commitments">
+            <ul>
+              <li>
+                Every time I want to say "Im sorry" for being late, I will say "I appreciate your patience."
+              </li>
+              <li>
+                Every time I brush my teeth, I will floss my teeth
+              </li>
+              <li>
+                Every time I fill up my water bottle, I will do 20 sit-ups
+              </li>
+              <li>
+                Every time I sneeze, I will think of one thing to be thankful for
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div id="addnew-tab">
+          <div class='commitments'>
+            <form action='post' id='zz-form'>
+            <label for="new-post-category"> Category </label>
+            <select name='new-post-category' style='font-family:monospace'>
+              <option value='Mental Health'> Mental Health </option>
+              <option value='Fitness'> Fitness </option>
+              <option value='Memory'> Memory </option>
+              <option value='Creativity'> Creativity </option>
+              <option value='Time Management'> Time Management </option>
+              <option value='Other'> Other </option>
+            </select>
+            <label for="habit"> Habit </label><br>
+            Every time <input type="textarea" name='trigger'/>, I will <input type="textarea" name='habit'/>. <br>
+            <input type="submit" value="Submit" style='font-family:monospace'>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
