@@ -15,10 +15,11 @@ class User(models.Model):
 		return user
 
 class Habit(models.Model):
+	category = models.CharField(max_length = 100)
 	author = models.ForeignKey('auth.User')
 	trigger = models.CharField(max_length = 500)
 	habit = models.CharField(max_length = 100)
-	num_commitments = models.IntegerField()
+	num_commitments = models.IntegerField(null=True)
 	publish_date = models.DateTimeField(
 		blank = True, null = True)
 #	comments = 
