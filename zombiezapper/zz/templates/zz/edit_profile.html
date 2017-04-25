@@ -40,7 +40,7 @@
                     <hr id="userhr" />
                     <div id="progressbardiv">
                       <form method='post' class="edit-page"style="padding:20px">{% csrf_token %}
-                        {{user.statement}}
+                        {{profile_form.as_p}}
                         <!-- <textarea>I am trying to be less sedentary and get more sleep.</textarea> -->
                         <button type="submit" onclick="location.href='home_page.html'">Submit</button>
                         <button type="button" onclick="location.href='home_page.html'">Cancel</button>

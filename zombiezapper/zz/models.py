@@ -22,7 +22,7 @@ class Profile(models.Model):
 		instance.profile.save()
 
 	def __str__(self):
-		return user
+		return str(self.user)
 
 class Habit(models.Model):
 	author = models.ForeignKey('auth.User')
@@ -31,7 +31,6 @@ class Habit(models.Model):
 	num_commitments = models.IntegerField()
 	publish_date = models.DateTimeField(
 		blank = True, null = True)
-#	comments = 
 
 	def publish(self):
 		self.publish_date = timezone.now()

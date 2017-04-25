@@ -5,8 +5,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.contrib.auth.models import User
-from .models import User
-from .forms import UserForm
+from .models import Profile
+#from .forms import UserForm
+from .forms import ProfileForm
 from django.db.models import Q
 
 # Create your views here.
@@ -19,16 +20,16 @@ def home(request):
 
 @login_required
 def edit_profile(request):
-#     try:
-#         user = User.objects.get(request.user)
-#         print(user.statement)
-#     except User.DoesNotExist:
-#         raise Http404("No user")
-#     if(request.method=='POST'):
-#         user=UserForm(request.POST, instance=user)
-# # 		user = User.objects.get(request.user)
-# # 		print(user.statement)
-#         return render(request, 'zz/edit_profile.html')
-#     else:
-#         return render(request, 'zz/edit_profile.html',{'user':user})
-    return render(request, 'zz/edit_profile.html')
+    if(request.method=='POST'):
+        profile_form=ProfileForm(request.POST, instance=request.user.profile)
+        if profile_form.is_valid():
+        	profile_form.save()
+        	#message.success(request, _('Your Profile was saved!'))
+        	return redirect('home')
+        else:
+        	messages.error(request, _('Please fix errors.'))
+    else:
+    	profile_form = ProfileForm(instance=request.user.profile)
+    	return render(request, 'zz/edit_profile.html',{'profile_form':profile_form
+    	})
+    
