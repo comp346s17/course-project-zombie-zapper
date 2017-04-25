@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <link rel="stylesheet" href="static/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
-  </head>
+    <script>
+        $(function(){
+            $("#tabs").tabs();
+            $('#progressbar').progressbar({
+              value:75
+            });
+        });
+        $(document).ready({
+          
+        });
+    </script>
   <body>
      <div id = 'title'>
       <a id="return" href="home_page.html" style="text-decoration:none;"><h1> Zombie Zappers </h1></a>
@@ -17,7 +27,7 @@
             <div id="title">
                 <div id="img">
                   <a>
-                <img src="usericondefault.png" /><i class="fa fa-instagram" aria-hidden="true"></i>
+                <i class="fa fa-user 5x" aria-hidden="true" id="user-icon"></i><i class="fa fa-instagram" aria-hidden="true"></i>
                 <!--Photo from "https://www.shareicon.net/interface-profile-user-user-earth-user-symbol-world-665303"-->
                   </a>
                 </div>
@@ -29,8 +39,9 @@
                     <h3>About Me</h3>
                     <hr id="userhr" />
                     <div id="progressbardiv">
-                      <form method='post' style="padding:20px">
-                        <textarea>I am trying to be less sedentary and get more sleep.</textarea>
+                      <form method='post' class="edit-page"style="padding:20px">{% csrf_token %}
+                        {{user.statement}}
+                        <!-- <textarea>I am trying to be less sedentary and get more sleep.</textarea> -->
                         <button type="submit" onclick="location.href='home_page.html'">Submit</button>
                         <button type="button" onclick="location.href='home_page.html'">Cancel</button>
                       </form>
