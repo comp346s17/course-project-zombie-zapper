@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from itertools import chain
+from django.http import HttpResponse
 from cgi import urlparse
 from models import Habit
 
@@ -40,6 +42,19 @@ def new_post(request):
         habit.save()
         print('HABIT', habit)
     return redirect('../', {'post_success': True})
+    
+def post_search(request):
+    if request.method == 'GET':
+        data = request.GET.get('query_string')
+        a = Habit.objects.filter(trigger__contains = data)
+        b = Habit.objects.filter(habit__contains = data)
+        habits = a | b
+        habits.order_by('-num_commitments')
+        data=[]
+        for i in habits:
+            data.append([i.trigger, i.habit, i.id])
+        return HttpResponse(data)
+        
         
         
         
