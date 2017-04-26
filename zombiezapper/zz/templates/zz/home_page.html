@@ -48,11 +48,11 @@
             </ul>
           </div>
         </div>
-        {% if user.is_authenticated%}
+        <!-- {% if user.is_authenticated%}
         Welcome, {{user.username}}!
         {%else %}
         Not logged in
-        {% endif %}
+        {% endif %} -->
     <div id = 'main_app'>
       <div id="tabs">
         <ul>
@@ -135,6 +135,12 @@
         <div id = "commitments-tab">
           <div class="commitments">
             <ul>
+              {% for commitment in commitments %}
+              <li>{{commitment.habit}}
+                <button>Examine</button>
+                <button>Delete</button>
+              </li>
+              {% endfor %}
               <li>
                 Every time I want to say "Im sorry" for being late, I will say "I appreciate your patience."
               </li>
