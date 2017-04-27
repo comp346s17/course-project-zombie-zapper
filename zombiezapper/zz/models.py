@@ -34,6 +34,8 @@ class Habit(models.Model):
     num_commitments = models.IntegerField()
     publish_date = models.DateTimeField(
         blank = True, null = True)
+    category = models.CharField(max_length = 20,
+        blank = True, null = True)
 
     def publish(self):
         self.publish_date = timezone.now()
