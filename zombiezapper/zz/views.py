@@ -3,6 +3,7 @@ from itertools import chain
 from django.http import HttpResponse
 from cgi import urlparse
 from models import Habit
+from django.core import serializers
 
 # Create your views here.
 def home(request):
@@ -50,9 +51,10 @@ def post_search(request):
         b = Habit.objects.filter(habit__contains = data)
         habits = a | b
         habits.order_by('-num_commitments')
-        data=[]
-        for i in habits:
-            data.append([i.trigger, i.habit, i.id])
+        data = serializers.serialize("json", habits)
+        #data=[]
+        #for i in habits:
+        #    data.append([i.trigger, i.habit, i.id])
         return HttpResponse(data)
         
         
