@@ -27,6 +27,7 @@ class Profile(models.Model):
 
 
 class Habit(models.Model):
+<<<<<<< HEAD
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     trigger = models.CharField(max_length = 500)
     habit = models.CharField(max_length = 100)
@@ -57,3 +58,20 @@ class Commitment(models.Model):
         self.date_commited = timezone.now()
         self.save()
 #    @receiver(post_save, sender=User)
+=======
+	category = models.CharField(max_length = 100)
+	author = models.ForeignKey('auth.User')
+	trigger = models.CharField(max_length = 500)
+	habit = models.CharField(max_length = 100)
+	num_commitments = models.IntegerField(null=True)
+	publish_date = models.DateTimeField(
+		blank = True, null = True)
+#	comments = 
+
+	def publish(self):
+		self.publish_date = timezone.now()
+		self.save()
+
+	def __str__(self):
+		return self.trigger + self.habit
+>>>>>>> master
