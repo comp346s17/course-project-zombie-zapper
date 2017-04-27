@@ -6,6 +6,9 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+<<<<<<< HEAD
+    url(r'^edit_profile/', views.edit_profile, name='edit_profile'),
+=======
     url(r'^category/$', views.category),
     url(r'^new_post', views.new_post),
     url(r'^post_search', views.post_search),
@@ -13,4 +16,5 @@ urlpatterns = [
     #url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     #url(r'^signup/$', views.signup, name='signup'),
     #url(r'^message/$', views.message, name='message'),
+>>>>>>> master
 ]

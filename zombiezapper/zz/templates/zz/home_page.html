@@ -51,6 +51,11 @@
             </ul>
           </div>
         </div>
+        <!-- {% if user.is_authenticated%}
+        Welcome, {{user.username}}!
+        {%else %}
+        Not logged in
+        {% endif %} -->
     <div id = 'main_app'>
       <div id="tabs">
         <ul>
@@ -116,14 +121,14 @@
                 <i class="fa fa-user 5x" aria-hidden="true" id="user-icon"></i>
                 <!--Photo from "https://www.shareicon.net/interface-profile-user-user-earth-user-symbol-world-665303"-->
                 <hr/>
-                <h2>Hello, User! <a href="edit_profile.html"><i class="fa fa-pencil" aria-hidden="true"></i></a></h2>
+                <h2>Hello, {{user.username}}! <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></h2>
                 <hr/>
     
                 <div id="userdata">
                     <h3>About Me</h3>
                     <hr id="userhr" />
                     <div id="progressbardiv" style="padding-bottom:0px">
-                    <p>I am trying to be less sedentary and get more sleep.</p>
+                    <p>{{user.profile.statement}}</p>
                     </div>
                 </div>
                 <div id="userdata">
@@ -147,6 +152,12 @@
         <div id = "commitments-tab">
           <div class="commitments">
             <ul>
+              {% for commitment in commitments %}
+              <li>{{commitment.habit}}
+                <button>Examine</button>
+                <button>Delete</button>
+              </li>
+              {% endfor %}
               <li>
                 Every time I want to say "Im sorry" for being late, I will say "I appreciate your patience."
               </li>
