@@ -490,3 +490,29 @@ label{
   background-color:#19334d;
   color:white;
 }
+
+#search_results {
+  display: none;
+  list-style: none;
+  background-color: white;
+  padding: 10px;
+  box-shadow: inset 5px 5px 10px #19334d;
+  color: #19334d;
+  text-align: left;
+  margin: 20px;
+}
+
+#search_results ul {
+  margin: 1em 0;
+  padding: 0; 
+}
+
+#search_results ul li {
+  list-style-type: none;
+  border-top: 2px solid #ffb499;
+  font-weight: bold;
+  padding: 10px;
+}
+#search_results ul li:hover {
+  background-color: #ffb499; 
+}

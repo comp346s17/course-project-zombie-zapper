@@ -28,6 +28,9 @@
     <div id = 'title'>
       <h1> Zombie Zappers </h1>
     </div>
+    {% if post_success == True %}
+        <h4 style="text-align:center"> Habit Successfully Posted!</h4>
+    {% endif %}
     <div id = 'top_post'>
       <button id = "close-post">x</button>
       <h2>I am trying to be lose 100lbs. What is a good way to achieve this?</h2>
@@ -60,35 +63,49 @@
         <span style="padding-bottom:30px">
           <input id="searchbar" type="search" placeholder="Search">
         </span>
-      
+        <div id = 'search_results'>
+          <ul>
+          
+          </ul>
+        </div>
         <table id = 'categories'>
           <tr>
-            <td><a href="category_page.html">
+            <td><a href="/category/?category=mental_health">
               <i class="fa fa-smile-o fa-5x" aria-hidden="true"></i>
               <h3> Mental Health </h3>
               </a>
             </td>
             <td>
+              <a href="/category/?category=fitness">
               <i class="fa fa-bicycle fa-5x" aria-hidden="true"></i>
               <h3> Fitness </h3>
+              </a>
             </td>
             <td>
+              <a href="/category/?category=memory">
               <i class="fa fa-cogs fa-5x" aria-hidden="true"></i>
               <h3> Memory </h3>
+              </a>
             </td>
           </tr>
           <tr>
             <td>
+              <a href="/category/?category=creativity">
               <i class="fa fa-paint-brush fa-5x" aria-hidden="true"></i>
               <h3> Creativity </h3>
+              </a>
             </td>
             <td>
+              <a href="/category/?category=time_management">
               <i class="fa fa-clock-o fa-5x" aria-hidden="true"></i>
               <h3> Time Management </h3>
+              </a>
             </td>
             <td>
+              <a href="/category/?category=other">
               <i class="fa fa-ellipsis-h fa-5x" aria-hidden="true"></i>
               <h3> Other </h3>
+              </a>
             </td>
           </tr>
         </table>
@@ -147,7 +164,7 @@
         </div>
         <div id="addnew-tab">
           <div class='commitments'>
-            <form action='post' id='zz-form'>
+            <form action="/new_post" id='zz-form'>
             <label for="new-post-category"> Category </label>
             <select name='new-post-category' style='font-family:monospace'>
               <option value='Mental Health'> Mental Health </option>
