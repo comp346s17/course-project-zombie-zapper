@@ -18,3 +18,4 @@ class HabitForm(forms.ModelForm):
 	class Meta:
 		model = Habit
 		fields = ('trigger', 'habit', 'category')
+

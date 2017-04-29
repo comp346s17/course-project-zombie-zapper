@@ -155,6 +155,8 @@
               {% for commitment in commitments %}
               <li>
                 Every time I {{commitment.habit.trigger}} I will {{commitment.habit.habit}}
+<!--                 Gets commitment pk
+ -->                <a href="{% url 'view_habit' pk=commitment.pk%}"> Inspect</a>
                 <button>Examine</button>
                 <button>Delete</button>
               </li>

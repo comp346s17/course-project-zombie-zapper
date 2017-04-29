@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from .models import Profile
 from .models import Commitment
 from .models import Habit
+from .models import Comment
 from .forms import ProfileForm
 from .forms import HabitForm
 from django.db.models import Q
@@ -87,7 +88,17 @@ def new_post(request):
         habit.save()
         print('HABIT', habit)
     return redirect('../', {'post_success': True})
-    
+
+def view_habit(request, pk):
+    # if request.method=='POST':
+    try:
+        commitment = Commitment.objects.get(pk=pk)
+        habit = Habit.objects.get(pk=commitment.habit.pk)
+        comments = Comment.objects.filter(habit = habit)
+    except Habit.DoesNotExist, Commitment.DoesNotExist:
+        print("habit not found")
+        raise Http404("No match")
+    return render(request, 'zz/comment_page.html', {'habit':habit, 'comments':comments})
 def post_search(request):
     if request.method == 'GET':
         data = request.GET.get('query_string')

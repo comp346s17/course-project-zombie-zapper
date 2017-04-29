@@ -20,7 +20,7 @@
             </tr>
         </table>
       <div id = 'container'>
-        <table id='category'>
+<!--         <table id='category'>
             <tr>
                 <th>
                     Score
@@ -40,8 +40,35 @@
                     Every time I have the urge to smoke a cigarette, I sprint 100 yards
                 </td>
                 <td>
+                <td>
                     Posted by: <br>
                     dmunk
+                </td>
+            </tr>
+        </table> -->
+                <table id='category'>
+            <tr>
+                <th>
+                    Score
+                </th>
+                <th>
+                    Habit
+                </th>
+                <th>
+                    Poster
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    88
+                </td>
+                <td>
+                    Every time I {{habit.trigger}}, I {{habit.habit}}
+                </td>
+                <td>
+                <td>
+                    Posted by: <br>
+                    {{habit.author}}
                 </td>
             </tr>
         </table>
@@ -70,6 +97,17 @@
                     austin
                 </td>
             </tr>
+            {% for comment in comments %}
+            <tr>
+                <td>
+                    {{comment.message}}
+                </td>
+                <td>
+                    {{comment.poster}}
+                </td>
+            </tr>
+            
+            {% endfor %}
             <tr>
                 <td colspan=2 class='comment-box'>
                     <div>

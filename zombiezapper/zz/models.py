@@ -73,3 +73,16 @@ class Commitment(models.Model):
 
 	def __str__(self):
 		return str(self.habit)
+
+class Comment(models.Model):
+    poster = models.ForeignKey(User, on_delete=models.CASCADE) #committer
+    habit = models.ForeignKey(Habit, on_delete=models.CASCADE)
+    date_posted = models.DateField( blank = True, null = True)
+    message = models.CharField(max_length=1000, blank=True)
+
+    def publish(self):
+        self.date_posted = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return "Comment From " + str(self.poster) + " - " + str(self.habit)
