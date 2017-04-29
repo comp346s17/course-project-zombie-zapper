@@ -13,3 +13,8 @@ class ProfileForm(forms.ModelForm):
 		model = Profile
 		fields = ('statement',)
 
+
+class HabitForm(forms.ModelForm):
+	class Meta:
+		model = Habit
+		fields = ('trigger', 'habit', 'category')

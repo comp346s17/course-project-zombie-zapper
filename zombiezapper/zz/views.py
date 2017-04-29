@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -9,32 +7,39 @@ from django.contrib.auth.models import User
 from .models import Profile
 from .models import Commitment
 from .models import Habit
-#from .forms import UserForm
 from .forms import ProfileForm
+from .forms import HabitForm
 from django.db.models import Q
-=======
 from django.shortcuts import render, redirect
 from itertools import chain
 from django.http import HttpResponse
 from cgi import urlparse
 from models import Habit
 from django.core import serializers
->>>>>>> master
 
 # Create your views here.
 
 @login_required
 def home(request):
-<<<<<<< HEAD
-#    user = User.objects.get(user=request.user)
-    commitments = Commitment.objects.filter(user=request.user).order_by('date_commited')
-    return render(request, 'zz/home_page.html',{
-        'commitments':commitments})
+    if(request.method=='POST'):
+        habit_form = HabitForm(request.POST)
+        if habit_form.is_valid():
+            habit = habit_form.save(commit=False)
+            habit.author = request.user
+            habit.save()
+            return redirect('home')
+    else:
+        habit_form = HabitForm()
+        commitments = Commitment.objects.filter(user=request.user).order_by('date_commited')
+        return render(request, 'zz/home_page.html',{
+        'commitments':commitments,
+        'habit_form': habit_form,
+        })
 
 @login_required
 def edit_profile(request):
     if(request.method=='POST'):
-        profile_form=ProfileForm(request.POST, instance=request.user.profile)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
         if profile_form.is_valid():
         	profile_form.save()
         	#message.success(request, _('Your Profile was saved!'))
@@ -45,8 +50,7 @@ def edit_profile(request):
     	profile_form = ProfileForm(instance=request.user.profile)
     	return render(request, 'zz/edit_profile.html',{'profile_form':profile_form
     	})
-    
-=======
+
     return render(request, 'zz/home_page.html')
 
 def category(request):
@@ -73,7 +77,7 @@ def category(request):
         return render(request, 'zz/category_page.html', {'category': categories[category], 'habits': habits, 'icon_html': icon_html[category]})
         
 def new_post(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         author = request.user
         category = request.GET.get('new-post-category')
         trigger = request.GET.get('trigger')
@@ -97,8 +101,3 @@ def post_search(request):
         #    data.append([i.trigger, i.habit, i.id])
         return HttpResponse(data)
         
-        
-        
-        
-        
->>>>>>> master
