@@ -111,4 +111,11 @@ def post_search(request):
         #for i in habits:
         #    data.append([i.trigger, i.habit, i.id])
         return HttpResponse(data)
-        
+
+def comment(request):
+    ID = request.GET.get('id')
+    habit = Habit.objects.filter(id=ID)[0]
+    icon_html = request.GET.get('icon_html')
+    category = request.GET.get('category')
+    comments = Comment.objects.filter(habit = habit).order_by('-date_posted')
+    return render(request, 'zz/comment_page.html', {'habit': habit, 'icon_html': icon_html, 'category': category, 'comments':comments})
