@@ -27,21 +27,23 @@ class Profile(models.Model):
 
 
 class Habit(models.Model):
-<<<<<<< HEAD
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     trigger = models.CharField(max_length = 500)
     habit = models.CharField(max_length = 100)
 #    committers = models.ManyToManyField(User, through='Commitment')
-    num_commitments = models.IntegerField()
+    num_commitments = models.IntegerField(default=1)
     publish_date = models.DateTimeField(
         blank = True, null = True)
-    category = models.CharField(max_length = 20,
-        blank = True, null = True)
+    categories = (('Mental Health', 'Mental Health'),('Fitness','Fitness'),('Memory', 'Memory'),('Creativity', 'Creativity'), ('Time Management', 'Time Management'), ('Other', 'Other'))
+    
+    category = models.CharField(max_length = 20, choices=categories, default="mh"
+        )
 
     def publish(self):
         self.publish_date = timezone.now()
         num_commitments = 1
         self.save()
+
 
     def __str__(self):
         return self.trigger +" "+ self.habit
@@ -57,21 +59,30 @@ class Commitment(models.Model):
     def publish(self):
         self.date_commited = timezone.now()
         self.save()
-#    @receiver(post_save, sender=User)
-=======
-	category = models.CharField(max_length = 100)
-	author = models.ForeignKey('auth.User')
-	trigger = models.CharField(max_length = 500)
-	habit = models.CharField(max_length = 100)
-	num_commitments = models.IntegerField(null=True)
-	publish_date = models.DateTimeField(
-		blank = True, null = True)
-#	comments = 
-
+    @receiver(post_save, sender=Habit)
+    def create_commit_cascade(sender, instance, created, **kwargs):
+        if created:
+            Commitment.objects.create(habit=instance, user=instance.author, date_commited=instance.publish_date)
+    @receiver(post_save, sender=Habit)
+    def save_user_cascade(sender, instance, created, **kwargs):
+        instance.author.save()
+        
 	def publish(self):
-		self.publish_date = timezone.now()
+		self.date_commited = timezone.now()
 		self.save()
 
 	def __str__(self):
-		return self.trigger + self.habit
->>>>>>> master
+		return str(self.habit)
+
+class Comment(models.Model):
+    poster = models.ForeignKey(User, on_delete=models.CASCADE) #committer
+    habit = models.ForeignKey(Habit, on_delete=models.CASCADE)
+    date_posted = models.DateField( blank = True, null = True)
+    message = models.CharField(max_length=1000, blank=True)
+
+    def publish(self):
+        self.date_posted = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return "Comment From " + str(self.poster) + " - " + str(self.habit)
