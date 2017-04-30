@@ -22,6 +22,7 @@ from django.core import serializers
 
 @login_required
 def home(request):
+
     if(request.method=='POST'):
         habit_form = HabitForm(request.POST)
         if habit_form.is_valid():
@@ -99,6 +100,17 @@ def view_habit(request, pk):
         print("habit not found")
         raise Http404("No match")
     return render(request, 'zz/comment_page.html', {'habit':habit, 'comments':comments})
+
+def view_habit_from_category(request, pk):
+    # if request.method=='POST':
+    try:
+        habit = Habit.objects.get(pk=pk)
+        comments = Comment.objects.filter(habit = habit)
+    except Habit.DoesNotExist, Commitment.DoesNotExist:
+        print("habit not found")
+        raise Http404("No match")
+    return render(request, 'zz/comment_page.html', {'habit':habit, 'comments':comments})
+
 def post_search(request):
     if request.method == 'GET':
         data = request.GET.get('query_string')

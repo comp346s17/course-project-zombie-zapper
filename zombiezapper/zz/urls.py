@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^new_post', views.new_post),
     url(r'^post_search', views.post_search),
     url(r'^post/(?P<pk>\d+)/', views.view_habit, name='view_habit'),
-    #url(r'^login/$', auth_views.login, {'template_name': 'messenger/login.html'}, name='login'),
+    url(r'^login/$', auth_views.login, {'template_name': 'zz/sign-in.html'}, name='login'),
     #url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     #url(r'^signup/$', views.signup, name='signup'),
     #url(r'^message/$', views.message, name='message'),
