@@ -6,8 +6,9 @@ $('#close-post').click(function(){
 })
 
 $('#searchbar').keyup(function(){
-  
+  $('#search_results').children("ul").children('li').remove();
   var query = $('#searchbar').val();
+  console.log(query);
   if (query != ''){
     $.ajax({url: "/post_search", data: {'query_string': query}, success: function(result){
           result1 = JSON.parse(result)
@@ -20,6 +21,7 @@ $('#searchbar').keyup(function(){
           }
     }})};
   if (query == '') {
+    $('#search_results').children("ul").children('li').remove();
     $('#search_results').css('display', 'none');
   };
 })
