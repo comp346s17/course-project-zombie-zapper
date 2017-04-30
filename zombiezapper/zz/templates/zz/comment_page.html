@@ -20,7 +20,7 @@
             </tr>
         </table>
       <div id = 'container'>
-        <table id='category'>
+<!--         <table id='category'>
             <tr>
                 <th>
                     Score
@@ -40,6 +40,33 @@
                     Every time I {{habit.trigger}}, I {{habit.habit}}.
                 </td>
                 <td>
+                <td>
+                    Posted by: <br>
+                    {{habit.author}}
+                </td>
+            </tr>
+        </table> -->
+                <table id='category'>
+            <tr>
+                <th>
+                    Score
+                </th>
+                <th>
+                    Habit
+                </th>
+                <th>
+                    Poster
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    88
+                </td>
+                <td>
+                    Every time I {{habit.trigger}}, I {{habit.habit}}
+                </td>
+                <td>
+                <td>
                     Posted by: <br>
                     {{habit.author}}
                 </td>
@@ -57,10 +84,10 @@
             {% for comment in comments %}
             <tr>
                 <td>
-                    {{comment.comment}}
+                    {{comment.message}}
                 </td>
                 <td>
-                    {{comment.author}}
+                    {{comment.poster}}
                 </td>
             </tr>
             {% endfor %}

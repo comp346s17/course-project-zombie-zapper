@@ -6,11 +6,13 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    url(r'^edit_profile/', views.edit_profile, name='edit_profile'),
     url(r'^category/$', views.category),
     url(r'^new_post', views.new_post),
     url(r'^post_search', views.post_search),
     url(r'^comment/$', views.comment),
     url(r'^new-comment', views.new_comment),
+    url(r'^post/(?P<pk>\d+)/', views.view_habit, name='view_habit'),
     #url(r'^login/$', auth_views.login, {'template_name': 'messenger/login.html'}, name='login'),
     #url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     #url(r'^signup/$', views.signup, name='signup'),

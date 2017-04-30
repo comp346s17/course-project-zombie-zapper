@@ -423,10 +423,13 @@ input::-webkit-input-placeholder {
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
+    font-family: monospace;
     border-radius: 4px;
     box-sizing: border-box;
 }
-
+#zz-form .ui-widget select{
+  font-family: monospace;
+}
 #zz-form input[type=submit] {
     width: 100%;
     background-color: #ffb499;

@@ -51,6 +51,11 @@
             </ul>
           </div>
         </div>
+        <!-- {% if user.is_authenticated%}
+        Welcome, {{user.username}}!
+        {%else %}
+        Not logged in
+        {% endif %} -->
     <div id = 'main_app'>
       <div id="tabs">
         <ul>
@@ -116,14 +121,14 @@
                 <i class="fa fa-user 5x" aria-hidden="true" id="user-icon"></i>
                 <!--Photo from "https://www.shareicon.net/interface-profile-user-user-earth-user-symbol-world-665303"-->
                 <hr/>
-                <h2>Hello, User! <a href="edit_profile.html"><i class="fa fa-pencil" aria-hidden="true"></i></a></h2>
+                <h2>Hello, {{user.username}}! <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil" aria-hidden="true"></i></a></h2>
                 <hr/>
     
                 <div id="userdata">
                     <h3>About Me</h3>
                     <hr id="userhr" />
                     <div id="progressbardiv" style="padding-bottom:0px">
-                    <p>I am trying to be less sedentary and get more sleep.</p>
+                    <p>{{user.profile.statement}}</p>
                     </div>
                 </div>
                 <div id="userdata">
@@ -147,7 +152,16 @@
         <div id = "commitments-tab">
           <div class="commitments">
             <ul>
+              {% for commitment in commitments %}
               <li>
+                Every time I {{commitment.habit.trigger}} I will {{commitment.habit.habit}}
+<!--                 Gets commitment pk
+ -->                <a href="{% url 'view_habit' pk=commitment.pk%}"> Inspect</a>
+                <button>Examine</button>
+                <button>Delete</button>
+              </li>
+              {% endfor %}
+              <!-- <li>
                 Every time I want to say "Im sorry" for being late, I will say "I appreciate your patience."
               </li>
               <li>
@@ -158,13 +172,30 @@
               </li>
               <li>
                 Every time I sneeze, I will think of one thing to be thankful for
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
         <div id="addnew-tab">
           <div class='commitments'>
-            <form action="/new_post" id='zz-form'>
+            <h1>Add a new Habit!</h1>
+            <form action="/" id='zz-form' method="post" >{% csrf_token %}
+            {{habit_form.non_field_errors}}
+            <div class="fieldWrapper">
+             {{habit_form.category.errors}}
+              <label for="{{habit_form.category.id_for_label}}">Category:</label> {{habit_form.category}}
+            </div>
+
+            <div class="fieldWrapper">
+              {{habit_form.trigger.errors}}
+              <label for="{{habit_form.trigger.id_for_label}}">Every Time I:</label> {{habit_form.trigger}}
+            </div>
+            <div class="fieldWrapper">
+               {{habit_form.habit.errors}}
+              <label for="{{habit_form.habit.id_for_label}}">I will</label> {{habit_form.habit}}
+            </div>
+<!-- 
+            <h1>Add a new Habit!</h1>
             <label for="new-post-category"> Category </label>
             <select name='new-post-category' style='font-family:monospace'>
               <option value='Mental Health'> Mental Health </option>
@@ -175,7 +206,7 @@
               <option value='Other'> Other </option>
             </select>
             <label for="habit"> Habit </label><br>
-            Every time <input type="textarea" name='trigger'/>, I will <input type="textarea" name='habit'/>. <br>
+            Every time <input type="textarea" name='trigger'/>, I will <input type="textarea" name='habit'/>. <br> -->
             <input type="submit" value="Submit" style='font-family:monospace'>
           </form>
           </div>
