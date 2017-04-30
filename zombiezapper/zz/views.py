@@ -3,6 +3,7 @@ from itertools import chain
 from django.http import HttpResponse
 from cgi import urlparse
 from models import Habit
+from models import Comment
 from django.core import serializers
 
 # Create your views here.
@@ -40,8 +41,7 @@ def new_post(request):
         habit = request.GET.get('habit')
         num_commitments = 0
         habit = Habit(author = author, category = category, trigger= trigger, habit = habit)
-        habit.save()
-        print('HABIT', habit)
+        habit.publish()
     return redirect('../', {'post_success': True})
     
 def post_search(request):
@@ -52,16 +52,25 @@ def post_search(request):
         habits = a | b
         habits.order_by('-num_commitments')
         data = serializers.serialize("json", habits)
-        #data=[]
-        #for i in habits:
-        #    data.append([i.trigger, i.habit, i.id])
         return HttpResponse(data)
 
 def comment(request):
     if request.method=='GET':
         ID = request.GET.get('id')
-        habit = Habit.objects.filter(id=ID)
-        return render(request, 'zz/comment_page.html', {'habit': habit})
+        habit = Habit.objects.filter(id=ID)[0]
+        icon_html = request.GET.get('icon_html')
+        category = request.GET.get('category')
+        comments = Comment.objects.filter(habit = habit).order_by('-publish_date')
+        return render(request, 'zz/comment_page.html', {'habit': habit, 'icon_html': icon_html, 'category': category, 'comments':comments})
+        
+def new_comment(request):
+    if request.method == 'GET':
+        comment = request.GET.get('comment')
+        habit = request.GET.get('habit')
+        author = request.user
+        comment = Comment(comment = comment, author = author, habit = habit)
+        comment.publish()
+        return redirect('../', {'post_success': True})
         
         
         
