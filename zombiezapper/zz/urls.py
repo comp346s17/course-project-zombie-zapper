@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^category/$', views.category),
     url(r'^new_post', views.new_post),
     url(r'^post_search', views.post_search),
+    url(r'^comment/$', views.comment)
     #url(r'^login/$', auth_views.login, {'template_name': 'messenger/login.html'}, name='login'),
     #url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     #url(r'^signup/$', views.signup, name='signup'),

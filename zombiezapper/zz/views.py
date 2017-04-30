@@ -56,6 +56,12 @@ def post_search(request):
         #for i in habits:
         #    data.append([i.trigger, i.habit, i.id])
         return HttpResponse(data)
+
+def comment(request):
+    if request.method=='GET':
+        ID = request.GET.get('id')
+        habit = Habit.objects.filter(id=ID)
+        return render(request, 'zz/comment_page.html', {'habit': habit})
         
         
         
