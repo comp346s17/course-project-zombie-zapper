@@ -1,18 +1,18 @@
 <!Doctype html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <div id = 'main_app'>
         <table id = 'category_title'>
             <tr style='height:20px'>
                 <td>
-                    <i class="fa fa-smile-o fa-3x" aria-hidden="true"></i>
+                    {{icon_html | safe}}
                 </td>
                 <td>
-                    <p>Mental Health</p>
+                    <p>{{category}}</p>
                 </td>
                 <td>
                     <a href="home_page.html"><h1 style='float:right;font-size:48px;height:10px'> Zombie Zappers </h1></a>
@@ -34,15 +34,15 @@
             </tr>
             <tr>
                 <td>
-                    88
+                    {{habit.num_commitments}}
                 </td>
                 <td>
-                    Every time I have the urge to smoke a cigarette, I sprint 100 yards
+                    Every time I {{habit.trigger}}, I {{habit.habit}}.
                 </td>
                 <td>
                 <td>
                     Posted by: <br>
-                    dmunk
+                    {{habit.author}}
                 </td>
             </tr>
         </table> -->
@@ -81,22 +81,6 @@
                     Posted by
                 </th>
             </tr>
-            <tr>
-                <td>
-                    This helped so much!
-                </td>
-                <td>
-                    dmunk
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    one thing I love about this thing is how much of a thing it is, you know? Like wow crazy am I right guys ?
-                </td>
-                <td>
-                    austin
-                </td>
-            </tr>
             {% for comment in comments %}
             <tr>
                 <td>
@@ -106,7 +90,6 @@
                     {{comment.poster}}
                 </td>
             </tr>
-            
             {% endfor %}
             <tr>
                 <td colspan=2 class='comment-box'>
@@ -114,10 +97,13 @@
                         My Comment: 
                     </div>
                     <div style="margin:20px;margin-left:0">
-                        <textarea rows="4" cols="100" name="comment"></textarea>
+                        <textarea rows="4" cols="100" name="comment" form = 'new-comment'></textarea>
                     </div>
                     <div>
-                        <button> Comment </button>
+                        <form action='/new-comment' id = 'new-comment'>
+                          <input type="hidden" name="habit" value="{{habit}}"/>
+                          <button type='submit'> Comment </button>
+                        </form>
                     </div>
                 </td>
             </tr>

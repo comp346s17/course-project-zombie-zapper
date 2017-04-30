@@ -72,7 +72,8 @@ class Commitment(models.Model):
 		self.save()
 
 	def __str__(self):
-		return str(self.habit)
+		return self.trigger + self.habit
+		
 
 class Comment(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE) #committer
