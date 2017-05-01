@@ -11,6 +11,8 @@ urlpatterns = [
     url(r'^new_post', views.new_post),
     url(r'^post_search', views.post_search),
     url(r'^comment/$', views.comment),
+    url(r'^un-commit/$', views.un_commit),
+    url(r'^commit/$', views.commit),
     url(r'^post/(?P<pk>\d+)/', views.view_habit, name='view_habit'),
     url(r'^login/$', auth_views.login, {'template_name': 'zz/sign-in.html'}, name='login'),
     url(r'^comment', views.comment),

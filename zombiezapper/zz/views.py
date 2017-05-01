@@ -74,10 +74,15 @@ def category(request):
         'time_management' : '<i class="fa fa-clock-o fa-3x" aria-hidden="true"></i>',
         'other' : '<i class="fa fa-ellipsis-h fa-3x" aria-hidden="true"></i>'
     }
+    
+    commitments = Commitment.objects.filter(user=request.user)
+    committed_habits = []
+    for i in commitments:
+        committed_habits.append(i.habit)
     if request.method=='GET':
         category = request.GET.get('category')
         habits = Habit.objects.filter(category=categories[category]).order_by('-num_commitments')
-        return render(request, 'zz/category_page.html', {'category': categories[category], 'habits': habits, 'icon_html': icon_html[category]})
+        return render(request, 'zz/category_page.html', {'category': categories[category], 'habits': habits, 'icon_html': icon_html[category], 'committed_habits':committed_habits})
         
 def new_post(request):
     if request.method == 'POST':
@@ -85,8 +90,7 @@ def new_post(request):
         category = request.GET.get('new-post-category')
         trigger = request.GET.get('trigger')
         habit = request.GET.get('habit')
-        num_commitments = 0
-        habit = Habit(author = author, category = category, trigger= trigger, habit = habit)
+        habit = Habit(author = author, category = category, trigger= trigger, habit = habit, num_commitments = 0)
         habit.publish()
     return redirect('../', {'post_success': True})
 
@@ -129,3 +133,34 @@ def comment(request):
     category = request.GET.get('category')
     comments = Comment.objects.filter(habit = habit).order_by('-date_posted')
     return render(request, 'zz/comment_page.html', {'habit': habit, 'icon_html': icon_html, 'category': category, 'comments':comments})
+
+def commit(request):
+    habit_pk = request.GET.get('id')
+    habit = Habit.objects.get(pk = habit_pk)
+    habit.num_commitments = habit.num_commitments + 1
+    user=request.user
+    commitment = Commitment(user=user, habit=habit)
+    habit.save()
+    commitment.save()
+    habits = Habit.objects.filter(category=habit.category).order_by('-num_commitments')
+    commitments = Commitment.objects.filter(user=request.user)
+    committed_habits = []
+    for i in commitments:
+        committed_habits.append(i.habit)
+    return render(request, 'zz/category_page.html', {'category': habit.category, 'habits': habits, 'committed_habits':committed_habits})
+
+def un_commit(request):
+    habit_pk = request.GET.get('id')
+    habit = Habit.objects.get(pk = habit_pk)
+    habit.num_commitments = habit.num_commitments - 1
+    user=request.user
+    commitment = Commitment.objects.get(user=user, habit=habit)
+    habit.save()
+    habits = Habit.objects.filter(category=habit.category).order_by('-num_commitments')
+    commitment.delete()
+    commitments = Commitment.objects.filter(user=request.user)
+    committed_habits = []
+    for i in commitments:
+        committed_habits.append(i.habit)
+    return render(request, 'zz/category_page.html', {'category': habit.category, 'habits': habits, 'committed_habits':committed_habits})
+    

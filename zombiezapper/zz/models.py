@@ -71,8 +71,6 @@ class Commitment(models.Model):
 		self.date_commited = timezone.now()
 		self.save()
 
-	def __str__(self):
-		return self.trigger + self.habit
 		
 
 class Comment(models.Model):
