@@ -94,11 +94,12 @@ def view_habit(request, pk):
     try:
         commitment = Commitment.objects.get(pk=pk)
         habit = Habit.objects.get(pk=commitment.habit.pk)
+        category = habit.category
         comments = Comment.objects.filter(habit = habit)
     except Habit.DoesNotExist, Commitment.DoesNotExist:
         print("habit not found")
         raise Http404("No match")
-    return render(request, 'zz/comment_page.html', {'habit':habit, 'comments':comments})
+    return render(request, 'zz/comment_page.html', {'habit':habit, 'comments':comments, 'category': category})
 def post_search(request):
     if request.method == 'GET':
         data = request.GET.get('query_string')
@@ -110,21 +111,9 @@ def post_search(request):
         return HttpResponse(data)
 
 def comment(request):
-    if request.method=='GET':
-        ID = request.GET.get('id')
-        habit = Habit.objects.filter(id=ID)[0]
-        icon_html = request.GET.get('icon_html')
-        category = request.GET.get('category')
-        comments = Comment.objects.filter(habit = habit).order_by('-publish_date')
-        return render(request, 'zz/comment_page.html', {'habit': habit, 'icon_html': icon_html, 'category': category, 'comments':comments})
-        
-def new_comment(request):
-    if request.method == 'GET':
-        message = request.GET.get('comment')
-        habit = request.GET.get('habit')
-        author = request.user
-        comment = Comment(comment = comment, author = author, habit = habit)
-        comment.publish()
-        return redirect('../', {'post_success': True})
-
-        
+    ID = request.GET.get('id')
+    habit = Habit.objects.filter(id=ID)[0]
+    icon_html = request.GET.get('icon_html')
+    category = request.GET.get('category')
+    comments = Comment.objects.filter(habit = habit).order_by('-date_posted')
+    return render(request, 'zz/comment_page.html', {'habit': habit, 'icon_html': icon_html, 'category': category, 'comments':comments})
