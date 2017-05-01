@@ -10,6 +10,7 @@ from .models import Habit
 from .models import Comment
 from .forms import ProfileForm
 from .forms import HabitForm
+from .forms import CommentForm
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from itertools import chain
@@ -79,29 +80,45 @@ def category(request):
         habits = Habit.objects.filter(category=categories[category]).order_by('-num_commitments')
         return render(request, 'zz/category_page.html', {'category': categories[category], 'habits': habits, 'icon_html': icon_html[category]})
         
-def new_post(request):
-    if request.method == 'POST':
-        author = request.user
-        category = request.GET.get('new-post-category')
-        trigger = request.GET.get('trigger')
-        habit = request.GET.get('habit')
-        num_commitments = 0
-        habit = Habit(author = author, category = category, trigger= trigger, habit = habit)
-        habit.publish()
-    return redirect('../', {'post_success': True})
+# def new_post(request):
+#     if request.method == 'POST':
+#         author = request.user
+#         category = request.GET.get('new-post-category')
+#         trigger = request.GET.get('trigger')
+#         habit = request.GET.get('habit')
+#         num_commitments = 0
+#         habit = Habit(author = author, category = category, trigger= trigger, habit = habit)
+#         habit.publish()
+#     return redirect('../', {'post_success': True})
 
+# def new_comment(request):
+#     if request.method ==
 def view_habit(request, pk):
-    # if request.method=='POST':
-    try:
-        commitment = Commitment.objects.get(pk=pk)
-        habit = Habit.objects.get(pk=commitment.habit.pk)
-        category = habit.category
-        comments = Comment.objects.filter(habit = habit)
-    except Habit.DoesNotExist, Commitment.DoesNotExist:
-        print("habit not found")
-        raise Http404("No match")
+    if request.method=='POST': #if comment is posted
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.poster = request.user
+            #Commitment = Commitment.objects.get(pk=pk)
+            comment.habit = Habit.objects.get(pk=pk)
+            comment.date_posted = timezone.now()
+            comment.save()
 
-    return render(request, 'zz/comment_page.html', {'habit':habit, 'comments':comments})
+            comments = Comment.objects.filter(habit=comment.habit)
+            #return redirect('views_habit', {'habit':comment.habit, 'comments':comments, 'comment_form':comment_form})
+            return redirect('view_habit', pk)
+    else:
+        try:
+#            commitment = Commitment.objects.get(pk=pk)
+            habit = Habit.objects.get(pk=pk)
+            category = habit.category
+            comments = Comment.objects.filter(habit = habit)
+
+        except Habit.DoesNotExist, Commitment.DoesNotExist:
+            print("habit not found")
+            raise Http404("No match")
+        comment_form = CommentForm()
+        return render(request, 'zz/comment_page.html', {'habit':habit, 'comments':comments, 'comment_form':comment_form})
 
 def view_habit_from_category(request, pk):
     # if request.method=='POST':
