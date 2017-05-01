@@ -10,7 +10,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     statement = models.CharField(max_length = 250, blank=True)
     level = models.IntegerField(default=1)
-    commitments = models.ForeignKey('Commitment', on_delete=models.CASCADE)
+    #commitments = models.ForeignKey('Commitment', on_delete=models.CASCADE)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -18,7 +18,7 @@ class Profile(models.Model):
             Profile.objects.create(user=instance)
     
     @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, created, **kwargs):
+    def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
 
     def __str__(self):
@@ -67,11 +67,9 @@ class Commitment(models.Model):
     def save_user_cascade(sender, instance, created, **kwargs):
         instance.author.save()
         
-	def publish(self):
-		self.date_commited = timezone.now()
-		self.save()
-
-		
+    def publish(self):
+        self.date_commited = timezone.now()
+        self.save()
 
 class Comment(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE) #committer
