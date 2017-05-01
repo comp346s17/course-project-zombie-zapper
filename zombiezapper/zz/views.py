@@ -94,11 +94,12 @@ def view_habit(request, pk):
     try:
         commitment = Commitment.objects.get(pk=pk)
         habit = Habit.objects.get(pk=commitment.habit.pk)
+        category = habit.category
         comments = Comment.objects.filter(habit = habit)
     except Habit.DoesNotExist, Commitment.DoesNotExist:
         print("habit not found")
         raise Http404("No match")
-    return render(request, 'zz/comment_page.html', {'habit':habit, 'comments':comments})
+    return render(request, 'zz/comment_page.html', {'habit':habit, 'comments':comments, 'category': category})
 def post_search(request):
     if request.method == 'GET':
         data = request.GET.get('query_string')
