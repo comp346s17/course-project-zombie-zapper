@@ -53,7 +53,11 @@
                       {{habit.author}}
                   </td>
                   <td>
-                      <button>Commit</button>
+                      {% if habit in committed_habits %}
+                      <button onclick="location.href='/un-commit/?id={{habit.pk}}';">Un-Commit</button>
+                      {% else %}
+                      <button onclick="location.href='/commit/?id={{habit.pk}}';">Commit</button>
+                      {% endif %}
                       <button onclick="location.href='/comment/?id={{habit.id}}&icon_html={{icon_html}}&category={{category}}';">Comment</button>
                   </td>
               </tr>
