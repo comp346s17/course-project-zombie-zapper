@@ -10,7 +10,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     statement = models.CharField(max_length = 250, blank=True)
     level = models.IntegerField(default=1)
-#    commitments = models.ForeignKey('sites.Habit')
+    commitments = models.ForeignKey('Commitment', on_delete=models.CASCADE)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -30,7 +30,7 @@ class Habit(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     trigger = models.CharField(max_length = 500)
     habit = models.CharField(max_length = 100)
-#    committers = models.ManyToManyField(User, through='Commitment')
+    committers = models.ManyToManyField(User, through='Commitment', related_name='users_committed')
     num_commitments = models.IntegerField(default=1)
     publish_date = models.DateTimeField(
         blank = True, null = True)
