@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^un-commit/$', views.un_commit),
     url(r'^commit/$', views.commit),
     url(r'^post/(?P<pk>\d+)/', views.view_habit, name='view_habit'),
+    url(r'^signup/$', views.signup, name='signup'),
 ]
