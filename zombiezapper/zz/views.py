@@ -40,6 +40,11 @@ def home(request):
         'habit_form': habit_form,
         })
 
+def uncommit(request, pk):
+    Commitment.objects.filter(pk=pk).delete()
+    return redirect('home')
+
+
 @login_required
 def edit_profile(request):
     if(request.method=='POST'):
@@ -138,6 +143,7 @@ def post_search(request):
         habits.order_by('-num_commitments')
         data = serializers.serialize("json", habits)
         return HttpResponse(data)
+
 
 def comment(request):
     ID = request.GET.get('id')

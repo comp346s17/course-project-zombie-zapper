@@ -5,6 +5,19 @@
     <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
   </head>
   <body>
+        {% if user.is_authenticated %}
+    <div class="sign-in" style="padding-right:50px">
+          <a href="{% url 'logout' %}" style="float:right">
+              Sign Out
+          </a>
+    </div>
+    {% else %}
+    <div class="sign-in">
+          <a href="">
+              Sign in
+          </a>
+    </div>
+    {% endif %}
     <div id = 'main_app'>
         <table id = 'category_title'>
             <tr style='height:20px'>
