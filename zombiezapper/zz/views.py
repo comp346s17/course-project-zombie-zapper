@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -8,6 +7,7 @@ from .models import Profile
 from .models import Commitment
 from .models import Habit
 from .models import Comment
+from django.contrib.auth.forms import UserCreationForm
 from .forms import ProfileForm
 from .forms import HabitForm
 from .forms import CommentForm
@@ -144,7 +144,20 @@ def post_search(request):
         data = serializers.serialize("json", habits)
         return HttpResponse(data)
 
-
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'zz/signup.html', {'form':form})
+    
 def comment(request):
     ID = request.GET.get('id')
     habit = Habit.objects.filter(id=ID)[0]
