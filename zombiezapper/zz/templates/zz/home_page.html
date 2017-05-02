@@ -9,9 +9,9 @@
     <script>
     $(function(){
         $("#tabs").tabs();
-        $('#progressbar').progressbar({
-          value:75
-        });
+        // $('#progressbar').progressbar({
+        //   value:10
+        // });
         $('#ikon.a').unbind('mouseenter mouseleave');
         $('#ikon.a').off('hover');
     });
@@ -123,10 +123,15 @@
                     <h3>About Me</h3>
                     <hr id="userhr" />
                     <div id="progressbardiv" style="padding-bottom:0px">
+                    {% if user.profile.statement %}
                     <p>{{user.profile.statement}}</p>
+                    {% else %}
+                    <p>Empty! Press the pencil to add some information!</p>
+                    {%endif%}
                     </div>
+
                 </div>
-                <div id="userdata">
+<!--                 <div id="userdata">
                     <h3>My Progress</h3>
                     <hr id="userhr" />
                     <div id="progressbardiv" style="">
@@ -139,7 +144,7 @@
                       </tr>
                     </table>
                     </div>
-                </div>
+                </div> -->
                 
             </div>
           
@@ -155,8 +160,10 @@
 
               <a style="margin:0px 20px 0px 20px; float:right" href="{%url 'uncommit' pk=commitment.pk %}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
             </li>
-            
+            {% empty %}
+              <li>EMPTY! Start your first Habit by pressing the next tab :)</li>
               {% endfor %}
+
               <!-- <li>
                 Every time I want to say "Im sorry" for being late, I will say "I appreciate your patience."
               </li>
