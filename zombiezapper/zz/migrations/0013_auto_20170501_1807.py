@@ -11,28 +11,3 @@ class Migration(migrations.Migration):
         ('zz', '0012_merge_20170501_1803'),
     ]
 
-    operations = [
-        migrations.RenameField(
-            model_name='comment',
-            old_name='author',
-            new_name='poster',
-        ),
-        migrations.RemoveField(
-            model_name='comment',
-            name='comment',
-        ),
-        migrations.RemoveField(
-            model_name='comment',
-            name='publish_date',
-        ),
-        migrations.AddField(
-            model_name='comment',
-            name='date_posted',
-            field=models.DateField(blank=True, null=True),
-        ),
-        migrations.AddField(
-            model_name='comment',
-            name='message',
-            field=models.CharField(blank=True, max_length=1000),
-        ),
-    ]
