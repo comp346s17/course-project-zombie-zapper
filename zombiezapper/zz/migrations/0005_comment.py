@@ -14,15 +14,3 @@ class Migration(migrations.Migration):
         ('zz', '0004_auto_20170424_2303'),
     ]
 
-    operations = [
-        migrations.CreateModel(
-            name='Comment',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('comment', models.CharField(max_length=500)),
-                ('publish_date', models.DateTimeField(blank=True, null=True)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('habit', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='zz.Habit')),
-            ],
-        ),
-    ]
