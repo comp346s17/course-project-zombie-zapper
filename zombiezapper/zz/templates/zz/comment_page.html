@@ -5,6 +5,19 @@
     <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
   </head>
   <body>
+        {% if user.is_authenticated %}
+    <div class="sign-in" style="padding-right:50px">
+          <a href="{% url 'logout' %}" style="float:right">
+              Sign Out
+          </a>
+    </div>
+    {% else %}
+    <div class="sign-in">
+          <a href="">
+              Sign in
+          </a>
+    </div>
+    {% endif %}
     <div id = 'main_app'>
         <table id = 'category_title'>
             <tr style='height:20px'>
@@ -20,32 +33,6 @@
             </tr>
         </table>
       <div id = 'container'>
-<!--         <table id='category'>
-            <tr>
-                <th>
-                    Score
-                </th>
-                <th>
-                    Habit
-                </th>
-                <th>
-                    Poster
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    {{habit.num_commitments}}
-                </td>
-                <td>
-                    Every time I {{habit.trigger}}, I {{habit.habit}}.
-                </td>
-                <td>
-                <td>
-                    Posted by: <br>
-                    {{habit.author}}
-                </td>
-            </tr>
-        </table> -->
                 <table id='category'>
             <tr>
                 <th>
@@ -87,21 +74,25 @@
                     {{comment.message}}
                 </td>
                 <td>
-                    {{comment.poster}}
+                    {{comment.poster}} on {{comment.date_posted}}
                 </td>
             </tr>
             {% endfor %}
             <tr>
                 <td colspan=2 class='comment-box'>
-                    <div>
+                    <!-- <div>
                         My Comment: 
                     </div>
                     <div style="margin:20px;margin-left:0">
                         <textarea rows="4" cols="100" name="comment" form = 'new-comment'></textarea>
-                    </div>
+                    </div> -->
                     <div>
-                        <form action='/new-comment' id = 'new-comment'>
-                          <input type="hidden" name="habit" value="{{habit}}"/>
+                        <form action="{% url 'view_habit' pk=habit.pk% }" method="post">
+                            {% csrf_token %}
+                            <div class="fieldWrapper">
+                                <label for="{comment_form.message.id_for_label}">Comment:</label>
+                                {{comment_form.message}}
+                            </div>
                           <button type='submit'> Comment </button>
                         </form>
                     </div>

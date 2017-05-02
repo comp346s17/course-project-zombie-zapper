@@ -6,25 +6,34 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
     <script>
-        $(function(){
-            $("#tabs").tabs();
-            $('#progressbar').progressbar({
-              value:75
-            });
+    $(function(){
+        $("#tabs").tabs();
+        $('#progressbar').progressbar({
+          value:75
         });
-        $(document).ready({
-          
-        });
-    </script>
+        $('#ikon.a').unbind('mouseenter mouseleave');
+        $('#ikon.a').off('hover');
+    });
+    $(document).ready({
+      // $('#ikon').off('mouseenter mouseleave');
+    });
+</script>
   </head>
   <body>
-    <div class="sign-in">
-          <button>
-              Sign in
-          </button>
+    {% if user.is_authenticated %}
+    <div class="sign-in" style="padding-right:50px">
+          <a href="accounts/logout" style="float:right">
+              Sign Out
+          </a>
     </div>
+    {% else %}
+    <div class="sign-in">
+          <a href="">
+              Sign in
+          </a>
+    </div>
+    {% endif %}
     <div id = 'title'>
       <h1> Zombie Zappers </h1>
     </div>
@@ -154,12 +163,13 @@
             <ul>
               {% for commitment in commitments %}
               <li>
+              <a  href="{% url 'view_habit' pk=commitment.habit.pk%}">
                 Every time I {{commitment.habit.trigger}} I will {{commitment.habit.habit}}
-<!--                 Gets commitment pk
--->                <a href="{% url 'view_habit' pk=commitment.pk%}"> Inspect</a>
-                <button>Examine</button>
-                <button>Delete</button>
-              </li>
+              </a>
+
+              <a style="margin:0px 20px 0px 20px; float:right" href="{%url 'uncommit' pk=commitment.pk %}"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            </li>
+            
               {% endfor %}
               <!-- <li>
                 Every time I want to say "Im sorry" for being late, I will say "I appreciate your patience."
@@ -214,5 +224,6 @@
       </div>
     </div>
     <script src="static/script.js"></script>
+
   </body>
 </html>
