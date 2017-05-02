@@ -18,7 +18,7 @@
         Sign In
       </h2>
 
-        <form method="post" style="text-align:center" action="{% url 'login' %}">
+        <form method="post" id = 'zz-form' style="text-align:center" action="{% url 'login' %}">
           {% csrf_token %}
            <table style="text-align:left;margin:0 auto;">
         <tr>
@@ -30,7 +30,7 @@
             <td>{{ form.password }}</td>
         </tr>
         </table>
-        <input type="submit" value="login"/>
+        <input type="submit" style='font-family:monospace' value="login"/>
         <input type="hidden" name="next" value="{{ next }}" />
         </form>
     </div>

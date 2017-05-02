@@ -23,9 +23,11 @@
   <body>
     {% if user.is_authenticated %}
     <div class="sign-in" style="padding-right:50px">
-          <a href="accounts/logout" style="float:right">
-              Sign Out
-          </a>
+      <button onclick="location.href='accounts/logout';">
+        
+            Sign Out
+
+      </button>
     </div>
     {% else %}
     <div class="sign-in">
@@ -42,29 +44,13 @@
     {% endif %}
     <div id = 'top_post'>
       <button id = "close-post">x</button>
-      <h2>I am trying to be lose 100lbs. What is a good way to achieve this?</h2>
-          <div class="commitments">
-            <ul>
-              <li>
-                Every time I want to eat a donut, I will eat 50 donuts
-              </li>
-              <li>
-                Every time I want to have orange juice, I will brush my teeth
-              </li>
-              <li>
-                Every time I fill up my water bottle, I will do 20 sit-ups
-              </li>
-              <li>
-                Every time I feel tired, I will take a nap.
-              </li>
-            </ul>
-          </div>
-        </div>
+      <h2 onclick="location.href='post/{{top_post.pk}}';">Every time I {{top_post.trigger}}, I {{top_post.habit}} </h2>
         <!-- {% if user.is_authenticated%}
         Welcome, {{user.username}}!
         {%else %}
         Not logged in
         {% endif %} -->
+    </div>
     <div id = 'main_app'>
       <div id="tabs">
         <ul>

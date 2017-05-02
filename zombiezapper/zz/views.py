@@ -19,6 +19,7 @@ from cgi import urlparse
 from models import Habit
 from models import Comment
 from django.core import serializers
+import random
 
 # Create your views here.
 
@@ -33,11 +34,15 @@ def home(request):
             habit.save()
             return redirect('home')
     else:
+        habits = Habit.objects.all()
+        rand = random.randint(0, (len(habits)-1))
+        top_post = habits[rand]
         habit_form = HabitForm()
         commitments = Commitment.objects.filter(user=request.user).order_by('date_commited')
         return render(request, 'zz/home_page.html',{
         'commitments':commitments,
         'habit_form': habit_form,
+        'top_post': top_post
         })
 
 def uncommit(request, pk):
