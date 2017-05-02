@@ -68,6 +68,7 @@ def edit_profile(request):
     return render(request, 'zz/home_page.html')
 
 def category(request):
+    global categories 
     categories = {
         'mental_health': 'Mental Health',
         'fitness': 'Fitness',
@@ -77,7 +78,8 @@ def category(request):
         'other' : 'Other'
     }
     
-    icon_html = {
+    global icon_htmls 
+    icon_htmls =  {
         'mental_health': '<i class="fa fa-smile-o fa-3x" aria-hidden="true"></i>',
         'fitness': '<i class="fa fa-bicycle fa-3x" aria-hidden="true"></i>',
         'memory' : '<i class="fa fa-cogs fa-3x" aria-hidden="true"></i>',
@@ -93,7 +95,7 @@ def category(request):
     if request.method=='GET':
         category = request.GET.get('category')
         habits = Habit.objects.filter(category=categories[category]).order_by('-num_commitments')
-        return render(request, 'zz/category_page.html', {'category': categories[category], 'habits': habits, 'icon_html': icon_html[category], 'committed_habits':committed_habits})
+        return render(request, 'zz/category_page.html', {'category': categories[category], 'habits': habits, 'icon_html': icon_htmls[category], 'committed_habits':committed_habits})
         
 # def new_post(request):
 #     if request.method == 'POST':
@@ -144,6 +146,7 @@ def view_habit_from_category(request, pk):
         print("habit not found")
         raise Http404("No match")
     return render(request, 'zz/comment_page.html', {'habit':habit, 'comments':comments, 'category': category})
+    
 def post_search(request):
     if request.method == 'GET':
         data = request.GET.get('query_string')
@@ -187,9 +190,11 @@ def commit(request):
     habits = Habit.objects.filter(category=habit.category).order_by('-num_commitments')
     commitments = Commitment.objects.filter(user=request.user)
     committed_habits = []
+    category = categories.keys()[categories.values().index(habit.category)]
+    icon_html = icon_htmls[category]
     for i in commitments:
         committed_habits.append(i.habit)
-    return render(request, 'zz/category_page.html', {'category': habit.category, 'habits': habits, 'committed_habits':committed_habits})
+    return redirect('../category?category='+category, {'habits': habits, 'icon_html': icon_html, 'committed_habits':committed_habits})
 
 def un_commit(request):
     habit_pk = request.GET.get('id')
@@ -202,7 +207,10 @@ def un_commit(request):
     commitment.delete()
     commitments = Commitment.objects.filter(user=request.user)
     committed_habits = []
+    category = categories.keys()[categories.values().index(habit.category)]
+    icon_html = icon_htmls[category]
     for i in commitments:
         committed_habits.append(i.habit)
-    return render(request, 'zz/category_page.html', {'category': habit.category, 'habits': habits, 'committed_habits':committed_habits})
+    return redirect('../category?category='+category, {'habits': habits, 'icon_html': icon_html, 'committed_habits':committed_habits})
+
     

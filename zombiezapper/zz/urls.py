@@ -7,7 +7,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^edit_profile/', views.edit_profile, name='edit_profile'),
-    url(r'^category/$', views.category),
+    url(r'^category/$', views.category, name='category'),
     url(r'^uncommit/(?P<pk>\d+)/$', views.uncommit, name='uncommit'),
     url(r'^post_search', views.post_search),
     url(r'^comment/$', views.comment),

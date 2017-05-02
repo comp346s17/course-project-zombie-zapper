@@ -7,9 +7,11 @@
   <body>
         {% if user.is_authenticated %}
     <div class="sign-in" style="padding-right:50px">
-          <a href="{% url 'logout' %}" style="float:right">
-              Sign Out
-          </a>
+      <button onclick="location.href='accounts/logout';">
+        
+            Sign Out
+
+      </button>
     </div>
     {% else %}
     <div class="sign-in">
@@ -21,7 +23,7 @@
     <div id = 'main_app'>
         <table id = 'category_title'>
             <tr style='height:20px'>
-                <td>
+                <td style="padding-left:60px">
                     {{icon_html | safe}}
                 </td>
                 <td>
