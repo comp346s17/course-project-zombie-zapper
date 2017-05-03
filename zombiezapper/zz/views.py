@@ -177,7 +177,8 @@ def comment(request):
     icon_html = request.GET.get('icon_html')
     category = request.GET.get('category')
     comments = Comment.objects.filter(habit = habit).order_by('-date_posted')
-    return render(request, 'zz/comment_page.html', {'habit': habit, 'icon_html': icon_html, 'category': category, 'comments':comments})
+    comment_form = CommentForm()
+    return render(request, 'zz/comment_page.html', {'habit': habit, 'icon_html': icon_html, 'category': category, 'comments':comments, 'comment_form':comment_form})
 
 def commit(request):
     habit_pk = request.GET.get('id')
